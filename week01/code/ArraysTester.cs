@@ -1,8 +1,10 @@
-public static class ArraysTester {
+public static class ArraysTester
+{
     /// <summary>
     /// Entry point for the tests
     /// </summary>
-    public static void Run() {
+    public static void Run()
+    {
         // Sample Test Cases (may not be comprehensive)
         Console.WriteLine("\n=========== PROBLEM 1 TESTS ===========");
         double[] multiples = MultiplesOf(7, 5);
@@ -34,14 +36,21 @@ public static class ArraysTester {
     /// <returns>array of doubles that are the multiples of the supplied number</returns>
     private static double[] MultiplesOf(double number, int length)
     {
-        // TODO Problem 1 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        // First create an array with the length
+        var resultMultiples = new double[length];
 
-        return new double[0]; // replace this return statement with your own
+        // Then we loop the length 
+        for (var i = 0; i < length; i++)
+        {
+            //into every iteration we multiply every index by number. We start with number 1, it is why add 1
+            resultMultiples[i] = number * (i + 1);
+
+        }
+
+
+        return resultMultiples; // replace this return statement with your own
     }
-    
+
     /// <summary>
     /// Rotate the 'data' to the right by the 'amount'.  For example, if the data is 
     /// <c>&lt;List&gt;{1, 2, 3, 4, 5, 6, 7, 8, 9}</c> and an amount is 3 then the list returned should be 
@@ -52,10 +61,27 @@ public static class ArraysTester {
     /// </summary>
     private static void RotateListRight(List<int> data, int amount)
     {
-        // TODO Problem 2 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        //First create an new List with the capacity of list used as parameter
+        List<int> rotateList = new List<int>(data.Count);
+
+        //Get the index from where to start cutting the list
+        var splitIndexRot = data.Count - amount;
+
+        //Then make an slice to the original list to get the amount of the list (the last amount of the array)
+        //Get the rotated numbers
+        var rotatedNums = data.GetRange(splitIndexRot, amount);
+
+        //Get the missed indexes or numbers
+        var missedNums = data.GetRange(0, splitIndexRot);
+
+        //remove the elements of the List
+        data.RemoveRange(0, data.Count);
+
+        //Add the rotated numbers first
+        data.AddRange(rotatedNums);
+
+        //Then add the missed numbers
+        data.AddRange(missedNums);
 
     }
 }
