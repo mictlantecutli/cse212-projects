@@ -1,7 +1,9 @@
-﻿namespace teach_03; 
+﻿namespace teach_03;
 
-public static class ComplexStackSolution {
-    public static void Main() {
+public static class ComplexStackSolution
+{
+    public static void Main()
+    {
         // True (passes on line 46 ... stack was empty at the end)
         Console.WriteLine(CheckBraces("(a == 3 or (b == 5 and c == 6))"));
         //  False ..wrong opening square bracket (fails on line 38 ... stack had only '(' in it before it was popped and compared with ']')
@@ -12,21 +14,27 @@ public static class ComplexStackSolution {
         Console.WriteLine(CheckBraces("(robot[id + 1].Execute(.Pass() || (!robot[id * (2 + i)].Alive && stormy) || (robot[id - 1].Alive && lavaFlowing))"));
     }
 
-    public static bool CheckBraces(string line) {
+    public static bool CheckBraces(string line)
+    {
         var stack = new Stack<char>();
-        foreach (var item in line) {
-            if (item is '(' or '[' or '{') {
+        foreach (var item in line)
+        {
+            if (item is '(' or '[' or '{')
+            {
                 stack.Push(item);
             }
-            else if (item is ')') {
+            else if (item is ')')
+            {
                 if (stack.Count == 0 || stack.Pop() != '(')
                     return false;
             }
-            else if (item is ']') {
+            else if (item is ']')
+            {
                 if (stack.Count == 0 || stack.Pop() != '[')
                     return false;
             }
-            else if (item is '}') {
+            else if (item is '}')
+            {
                 if (stack.Count == 0 || stack.Pop() != '{')
                     return false;
             }
