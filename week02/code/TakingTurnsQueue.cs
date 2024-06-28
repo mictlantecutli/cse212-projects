@@ -22,11 +22,8 @@ public class TakingTurnsQueue
     {
         var person = new Person(name, turns);
 
+        person.Turns = turns;
 
-        if (person.Turns <= 0)
-        {
-            person.Turns = int.MaxValue;
-        }
         _people.Enqueue(person);
         //Console.WriteLine(_people);
     }
@@ -41,23 +38,32 @@ public class TakingTurnsQueue
     public void GetNextPerson()
     {
         if (_people.IsEmpty())
+        {
             Console.WriteLine("No one in the queue.");
-
+        }
         else
         {
+            //When the person have 1 turn, he does not re added in the queue
             Person person = _people.Dequeue();
-            if (person.Turns > 1)
+
+            //If the person is <= 0, it is infinite, so it is added to the queue
+            if (person.IsInfinite)
+            {
+                _people.Enqueue(person);
+            }
+            //When the person have more than 1 turn, he re addde to the queue and the turns are substracted
+            else if (person.Turns > 1)
             {
                 person.Turns -= 1;
                 _people.Enqueue(person);
             }
-
-
-
             Console.WriteLine(person.Name);
 
-
         }
+
+
+
+
 
     }
 
@@ -65,4 +71,4 @@ public class TakingTurnsQueue
     {
         return _people.ToString();
     }
-}
+};

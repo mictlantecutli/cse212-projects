@@ -67,7 +67,7 @@
         }
         // Defect(s) Found: In TakingTurns.cs file when adding a person in the AddPerson() method there was no condition
         // that handled when someone in the turns parameter set it to zero. So I put a condition
-        // that it updates the el turns to an extremely large number.
+        // that it updates the turns to an extremely large number.
 
         Console.WriteLine("---------");
 

@@ -24,7 +24,16 @@ public class Translator
     /// <returns>fixed array of divisors</returns>
     public void AddWord(string fromWord, string toWord)
     {
-        // ADD YOUR CODE HERE
+        // Of the key is in the dictionary
+        if (!_words.ContainsKey(fromWord))
+        {
+            _words.Add(fromWord, toWord);
+
+        }
+        else
+        {
+            Console.WriteLine($"The word '{fromWord}' already exists in the dictionary.");
+        }
     }
 
     /// <summary>
@@ -34,7 +43,15 @@ public class Translator
     /// <returns>The translated word or "???" if no translation is available</returns>
     public string Translate(string fromWord)
     {
-        // ADD YOUR CODE HERE
-        return "";
+        // CHeck if the word is in the dictionary
+        if (_words.ContainsKey(fromWord))
+        {
+            return _words[fromWord];
+        }
+        else
+        {
+            return $"The word '{fromWord}' is not in the dictionary.";
+        }
+
     }
 }

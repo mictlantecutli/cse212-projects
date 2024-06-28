@@ -1,7 +1,9 @@
 using System.Text.Json;
 
-public static class SetsAndMapsTester {
-    public static void Run() {
+public static class SetsAndMapsTester
+{
+    public static void Run()
+    {
         // Problem 1: Find Pairs with Sets
         Console.WriteLine("\n=========== Finding Pairs TESTS ===========");
         DisplayPairs(new[] { "am", "at", "ma", "if", "fi" });
@@ -107,10 +109,39 @@ public static class SetsAndMapsTester {
     /// that there were no duplicates) and therefore should not be displayed.
     /// </summary>
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
-    private static void DisplayPairs(string[] words) {
+    private static void DisplayPairs(string[] words)
+    {
         // To display the pair correctly use something like:
         // Console.WriteLine($"{word} & {pair}");
         // Each pair of words should displayed on its own line.
+
+        //First I created a set of strings
+        HashSet<string> pairs = new HashSet<string>();
+
+        //Then I did a loop into the array of strings
+        foreach (var word in words)
+        {
+            char[] charArray = word.ToCharArray();
+
+            // Reverse the array
+            Array.Reverse(charArray);
+
+            // Create the reversed string
+            string pair = new string(charArray);
+            //Console.WriteLine(pair);
+
+            //if the set contains a pair(the reversed word) print the word of the set and the pair
+            if (pairs.Contains(pair))
+            {
+                Console.WriteLine($"{word} & {pair}");
+
+            }
+            //if not add the word to the set
+            else
+            {
+                pairs.Add(word);
+            }
+        }
     }
 
     /// <summary>
@@ -127,11 +158,25 @@ public static class SetsAndMapsTester {
     /// #############
     /// # Problem 2 #
     /// #############
-    private static Dictionary<string, int> SummarizeDegrees(string filename) {
+    private static Dictionary<string, int> SummarizeDegrees(string filename)
+    {
         var degrees = new Dictionary<string, int>();
-        foreach (var line in File.ReadLines(filename)) {
+        foreach (var line in File.ReadLines(filename))
+        {
             var fields = line.Split(",");
-            // Todo Problem 2 - ADD YOUR CODE HERE
+            var degreeId = fields[3];
+
+            //Console.WriteLine(degree + numPeople);
+            //Firts, if the degreeId is in the degree dictionary, sum by 1
+            //Second if the degreeId is not in the degrees dictionary, it is added to the dictionary with value of one.
+            if (degrees.ContainsKey(degreeId))
+            {
+                degrees[degreeId] += 1;
+            }
+            else
+            {
+                degrees[degreeId] = 1;
+            }
         }
 
         return degrees;
@@ -156,15 +201,71 @@ public static class SetsAndMapsTester {
     /// #############
     /// # Problem 3 #
     /// #############
-    private static bool IsAnagram(string word1, string word2) {
-        // Todo Problem 3 - ADD YOUR CODE HERE
+    private static bool IsAnagram(string word1, string word2)
+    {
+        //Every imput strings are converted into dictionary with help of counterLetter function 
+        Dictionary<char, int> word1Dic = counterLetter(word1);
+        Dictionary<char, int> word2Dic = counterLetter(word2);
+
+        //Then the items of every dictionary are counted
+        int word1Count = word1Dic.Count();
+        int word2Count = word2Dic.Count();
+
+        //if both dictionaries have the same number of items
+        //the keys and values are compared
+        if (word1Count == word2Count)
+        {
+            bool areEqual = word1Dic.OrderBy(item => item.Key).SequenceEqual(word2Dic.OrderBy(item => item.Key));
+            if (areEqual)
+            {
+                return true;
+
+            }
+            else
+            {
+                return false;
+            }
+
+
+        }
+        //if the number of items are not equals false is returned
         return false;
+
+        //This dictionary create a dictionary with from one string
+        //This function count the letters of the string withouot the spaces
+        //The number of letters will be the value of the dictionary
+        //The key of the dictionary will be the letter in lowercase
+        static Dictionary<char, int> counterLetter(string str)
+        {
+            Dictionary<char, int> countsArray = new Dictionary<char, int>();
+            foreach (var letter in str)
+            {
+                if (char.IsLetter(letter))
+                {
+                    char lowerLetter = char.ToLower(letter);
+                    if (!countsArray.ContainsKey(lowerLetter))
+                    {
+                        countsArray[lowerLetter] = 1;
+                    }
+                    else
+                    {
+                        countsArray[lowerLetter] += 1;
+                    }
+                }
+
+            }
+            return countsArray;
+        }
+
+
+
     }
 
     /// <summary>
     /// Sets up the maze dictionary for problem 4
     /// </summary>
-    private static Dictionary<ValueTuple<int, int>, bool[]> SetupMazeMap() {
+    private static Dictionary<ValueTuple<int, int>, bool[]> SetupMazeMap()
+    {
         Dictionary<ValueTuple<int, int>, bool[]> map = new() {
             { (1, 1), new[] { false, true, false, true } },
             { (1, 2), new[] { false, true, true, false } },
@@ -220,7 +321,8 @@ public static class SetsAndMapsTester {
     /// https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
     /// 
     /// </summary>
-    private static void EarthquakeDailySummary() {
+    private static void EarthquakeDailySummary()
+    {
         const string uri = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
         using var client = new HttpClient();
         using var getRequestMessage = new HttpRequestMessage(HttpMethod.Get, uri);
