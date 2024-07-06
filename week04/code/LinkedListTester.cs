@@ -1,5 +1,7 @@
-public static class LinkedListTester {
-    public static void Run() {
+public static class LinkedListTester
+{
+    public static void Run()
+    {
         // Sample Test Cases (may not be comprehensive) 
         Console.WriteLine("\n=========== PROBLEM 1 TESTS ===========");
         var ll = new LinkedList();
@@ -62,6 +64,7 @@ public static class LinkedListTester {
         Console.WriteLine(ll4.HeadAndTailAreNull()); // True
 
         Console.WriteLine("\n=========== PROBLEM 4 TESTS ===========");
+        Console.WriteLine(ll.ToString());
         ll.Replace(2, 10);
         Console.WriteLine(ll.ToString()); // <LinkedList>{4, 35, 10, 10}
         ll.Replace(7, 5);
